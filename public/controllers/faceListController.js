@@ -3,6 +3,7 @@ app.controller('faceListCtrl', ['$scope', '$http','$route','$timeout', function 
 	console.log('faceList controller');
 
 	$scope.show = false;
+	$scope.bar = false;
 
 	/*Show all faces*/
 	$scope.getFaces = () => {
@@ -14,6 +15,7 @@ app.controller('faceListCtrl', ['$scope', '$http','$route','$timeout', function 
 	}
 	/*add a face to a face list*/
 	$scope.addFace = () => {
+		$scope.bar = true;
 		$scope.data = {
 			link: $scope.link,
 			facelist_id: $scope.faceListId,
@@ -27,6 +29,7 @@ app.controller('faceListCtrl', ['$scope', '$http','$route','$timeout', function 
 	}
 	/*find a similar faces in the given face list*/
 	$scope.findSimilar = () => {
+		$scope.bar = true;
 		$scope.data = {
 			link : $scope.link,
 			faceList_id: $scope.faceListId
@@ -34,11 +37,13 @@ app.controller('faceListCtrl', ['$scope', '$http','$route','$timeout', function 
 		$http.post('/api/faces/find', $scope.data).then( response => {
 			console.log(response);
 		    if(response.data.success){ 
+		    	$scope.bar = false;
 		        $scope.success = "Face found";          
 		    	
 		    	$scope.data = response.data.message;
 		    	$scope.show = true;
 		    }else{
+		    	$scope.bar = false;
                $scope.success = "Sorry no face found";
                $timeout(function() {
                	 $route.reload(); 
