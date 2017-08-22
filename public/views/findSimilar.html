@@ -1,0 +1,51 @@
+
+<h1 class="text-center">Face Recognition</h1>
+<div class="text-center">
+<form method="POST" ng-submit="findSimilar()">
+	<div class="row col-md-offset-4">
+		<div class="form-group col-md-6">
+			<label for="">face List Id:</label>
+			<input type="text"  name="faceListId" class="form-control" ng-model="faceListId">
+		</div>
+	</div>
+	<div class="row col-md-offset-4">
+		<div class="form-group  col-md-6">
+			<label for="">link:</label>
+			<input type="text" name="link" class="form-control" ng-model="link">
+		</div>
+	</div>	
+	<button type="submit" class="btn btn-primary">find similar</button>
+	</form>
+</div>
+	<h2 class="text-center">{{success}}</h2>
+	<div ng-show="show">
+	  
+		<table class="table table-striped">
+	    <thead>
+	      <tr>
+	       <th>Query photo</th>
+	       <th>Matched Photo</th>
+
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr>
+	        
+	        <td>
+		        <div class="text-center">
+		          <img class="img-thumbnail" src={{link}}>
+		        </div>
+	        </td>
+	        <td>
+	        <div class="text-center">
+	          <img class="img-thumbnail" src={{data.imgUrl}}>
+	        </div>
+	        </td>
+	       
+	      
+	      </tr>
+	    </tbody>
+	  </table>
+
+
+  </div>

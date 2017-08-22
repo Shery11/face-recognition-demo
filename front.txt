@@ -1,0 +1,62 @@
+			function getUserMedia(options, successCallback, failureCallback) {
+			  var api = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+			    navigator.mozGetUserMedia || navigator.msGetUserMedia;
+			  if (api) {
+			    return api.bind(navigator)(options, successCallback, failureCallback);
+			  }
+			  alert('User Media API not supported.');
+			}
+
+			function getStream(type) {
+			  var constraints = {};
+			  constraints[type] = true;
+			  getUserMedia(constraints, function(stream) {
+			    var mediaControl = document.querySelector(type);
+			    if (navigator.mozGetUserMedia) {
+			      mediaControl.mozSrcObject = stream;
+			    } else {
+			      mediaControl.srcObject = stream;
+			      mediaControl.src = (window.URL || window.webkitURL).createObjectURL(stream);
+			    }
+			  }, function(err) {
+			    alert('Error: ' + err);
+			  });
+			}
+
+
+
+
+///////////////////////////////////////////html
+		<div class="container" style="margin-top: 10px">
+		  <div class="row">
+		    <div class="col-sm-6">
+		      <p><button class="btn btn-lg btn-primary"  onclick="getStream('video')">Grab video</button></p>
+		      <video controls autoplay style="height:180px; width: 240px;"></video>
+		    </div>
+		  </div>
+		</div>
+
+////////////////////////////////////////// 2nd
+			let video = document.getElementById('video');
+			let canvas = document.getElementById('canvas');
+			let context = canvas.getContext('2d');
+			// Get access to the camera!
+			if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+			    // Not adding `{ audio: true }` since we only want video now
+			    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+			        video.src = window.URL.createObjectURL(stream);
+			        video.play();
+			    });
+			}
+			document.getElementById("snap").addEventListener("click", function() {
+			context.drawImage(video, 0, 0, 500, 400);
+});
+/////////////////////////////////////////html
+
+		<div class="row">
+			<div class="col-md-12">
+			<video id="video" width="500" height="480" autoplay></video>
+			<button id="snap">Snap Photo</button>
+			<canvas id="canvas" width="500" height="480"></canvas>	
+			</div>
+		</div>
